@@ -1,8 +1,6 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 local PlayerData = QBCore.Functions.GetPlayerData()
 
-local hasRental = false
-
 AddEventHandler('onResourceStart', function(resourceName)
     if GetCurrentResourceName() == resourceName then 
         PlayerJob = QBCore.Functions.GetPlayerData().job 
@@ -204,7 +202,10 @@ function MechanicPed()
                     event = "sl-jobgarage:client:mechapprovedvehiclesmenu",
                     icon = "fa-solid fa-car",
                     label = "View Issued Vehicles",
-                    job = Config.MechanicJobName
+                    canInteract = function()
+                        if PlayerJob.name == Config.MechanicJobName and PlayerJob.isboss then return false end 
+                        return true 
+                    end,
                 },
                 {
                     num = 2,
@@ -212,7 +213,10 @@ function MechanicPed()
                     event = "sl-jobgarage:client:mechissuevehiclesmenu",
                     icon = "fa-solid fa-list",
                     label = "Issue Work-Related Vehicle",
-                    job = Config.MechanicJobName
+                    canInteract = function()
+                        if PlayerJob.name == Config.MechanicJobName and PlayerJob.isboss then return false end 
+                        return true 
+                    end,
                 },
                 {
                     num = 3,
@@ -220,7 +224,10 @@ function MechanicPed()
                     event = "sl-jobgarage:client:mechselfissuevehiclesmenu",
                     icon = "fa-solid fa-user",
                     label = "Self-Issue Work-Related Vehicle",
-                    job = Config.MechanicJobName
+                    canInteract = function()
+                        if PlayerJob.name == Config.MechanicJobName and PlayerJob.isboss then return false end 
+                        return true 
+                    end,
                 },
             },
             distance = 2.5,

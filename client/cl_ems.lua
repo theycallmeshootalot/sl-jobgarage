@@ -1,8 +1,6 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 local PlayerData = QBCore.Functions.GetPlayerData()
 
-local hasRental = false
-
 AddEventHandler('onResourceStart', function(resourceName)
     if GetCurrentResourceName() == resourceName then 
         PlayerJob = QBCore.Functions.GetPlayerData().job 
@@ -211,7 +209,10 @@ function EMSPed()
                     event = "sl-jobgarage:client:emsapprovedvehiclesmenu",
                     icon = "fa-solid fa-car",
                     label = "View Issued Vehicles",
-                    job = Config.EMSJobName
+                    canInteract = function()
+                        if PlayerJob.name == Config.EMSJobName and PlayerJob.isboss then return false end 
+                        return true 
+                    end,
                 },
                 {
                     num = 2,
@@ -219,7 +220,10 @@ function EMSPed()
                     event = "sl-jobgarage:client:emsissuevehiclesmenu",
                     icon = "fa-solid fa-list",
                     label = "Issue Work-Related Vehicle",
-                    job = Config.EMSJobName
+                    canInteract = function()
+                        if PlayerJob.name == Config.EMSJobName and PlayerJob.isboss then return false end 
+                        return true 
+                    end,
                 },
                 {
                     num = 3,
@@ -227,7 +231,10 @@ function EMSPed()
                     event = "sl-jobgarage:client:emsselfissuevehiclesmenu",
                     icon = "fa-solid fa-user",
                     label = "Self-Issue Work-Related Vehicle",
-                    job = Config.EMSJobName
+                    canInteract = function()
+                        if PlayerJob.name == Config.EMSJobName and PlayerJob.isboss then return false end 
+                        return true 
+                    end,
                 },
             },
             distance = 2.5,
